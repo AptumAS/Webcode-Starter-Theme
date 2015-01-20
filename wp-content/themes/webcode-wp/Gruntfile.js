@@ -54,6 +54,18 @@ module.exports = function(grunt) {
       }
 
     },
+    postcss: {
+    options: {
+      map: true,
+      processors: [
+        require('autoprefixer-core')({browsers: 'last 1 version'}).postcss,
+        require('csswring').postcss
+      ]
+    },
+    dist: {
+      src: 'css/*.css'
+    }
+  },
 
     watch: {
       grunt: { files: ['Gruntfile.js'] },
@@ -65,12 +77,14 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-postcss');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-autoprefixer');
 
-  grunt.registerTask('build', ['sass', 'copy', 'uglify', 'concat']);
+  grunt.registerTask('build', ['sass', 'copy', 'uglify', 'concat', 'postcss']);
   grunt.registerTask('default', ['watch']);
 }
